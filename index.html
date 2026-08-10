@@ -1,1 +1,232 @@
-<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Honey Money Pizza Cafe</title><link rel="stylesheet" href="style.css"></head><body><header><b>🍕 Honey Money Pizza Cafe</b><button id="cartBtn">🛒 Cart <span id="count">0</span></button></header><section class="hero"><h1>Order your favourite pizza 🍕</h1><p>Fresh • Hot • Fast</p></section><main><h2>Menu</h2><div id="menu">Loading menu…</div></main><div id="cart" class="panel"><h2>Your Cart <button onclick="closeCart()">✕</button></h2><div id="items"></div><h3>Total: ₹<span id="total">0</span></h3><button onclick="checkout()">Proceed to Order</button></div><div id="form" class="panel"><h2>Delivery Details</h2><input id="name" placeholder="Your name"><input id="phone" placeholder="Mobile number"><textarea id="address" placeholder="Full delivery address"></textarea><button onclick="placeOrder()">Place Order</button><p id="msg"></p></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honey Money Pizza Cafe</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#111;
+  color:white;
+}
+
+header{
+  background:#181818;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+.cart{
+  background:#ffb800;
+  color:#111;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.hero{
+  padding:70px 25px;
+  background:linear-gradient(135deg,#3b2600,#111);
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:18px;
+}
+
+.hero p{
+  font-size:20px;
+}
+
+.container{
+  padding:30px 20px;
+}
+
+h2{
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
+
+.item{
+  background:#1d1d1d;
+  border-radius:15px;
+  padding:20px;
+  border:1px solid #333;
+}
+
+.item h3{
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.item p{
+  color:#bbb;
+  margin-bottom:15px;
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+button{
+  border:0;
+  background:#ffb800;
+  color:#111;
+  padding:12px 18px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#ffc933;
+}
+
+#cartBox{
+  margin-top:30px;
+  background:#1d1d1d;
+  padding:20px;
+  border-radius:15px;
+  display:none;
+}
+
+.cartItem{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #333;
+}
+
+.whatsapp{
+  display:block;
+  width:100%;
+  text-align:center;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:10px;
+  margin-top:20px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🍕 Honey Money Pizza Cafe</div>
+  <div class="cart">🛒 Cart <span id="count">0</span></div>
+</header>
+
+<section class="hero">
+  <h1>Order your favourite pizza 🍕</h1>
+  <p>Fresh • Hot • Fast</p>
+</section>
+
+<section class="container">
+  <h2>Our Menu</h2>
+
+  <div class="menu">
+
+    <div class="item">
+      <h3>🍕 Margherita Pizza</h3>
+      <p>Classic cheese pizza</p>
+      <div class="price">₹99</div>
+      <button onclick="addItem('Margherita Pizza',99)">Add to Cart</button>
+    </div>
+
+    <div class="item">
+      <h3>🍕 Capsicum Pizza</h3>
+      <p>Cheese & fresh capsicum</p>
+      <div class="price">₹129</div>
+      <button onclick="addItem('Capsicum Pizza',129)">Add to Cart</button>
+    </div>
+
+    <div class="item">
+      <h3>🍕 Corn Pizza</h3>
+      <p>Sweet corn & cheese</p>
+      <div class="price">₹129</div>
+      <button onclick="addItem('Corn Pizza',129)">Add to Cart</button>
+    </div>
+
+    <div class="item">
+      <h3>🍕 Chicken Pizza</h3>
+      <p>Loaded chicken & cheese</p>
+      <div class="price">₹179</div>
+      <button onclick="addItem('Chicken Pizza',179)">Add to Cart</button>
+    </div>
+
+    <div class="item">
+      <h3>🍔 Chicken Burger</h3>
+      <p>Crispy chicken burger</p>
+      <div class="price">₹99</div>
+      <button onclick="addItem('Chicken Burger',99)">Add to Cart</button>
+    </div>
+
+    <div class="item">
+      <h3>🍔 Veg Burger</h3>
+      <p>Cheesy veg burger</p>
+      <div class="price">₹79</div>
+      <button onclick="addItem('Veg Burger',79)">Add to Cart</button>
+    </div>
+
+  </div>
+
+  <div id="cartBox">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3 style="margin-top:20px;">Total: ₹<span id="total">0</span></h3>
+
+    <a id="whatsappBtn" class="whatsapp" href="#" target="_blank">
+      📲 Order on WhatsApp
+    </a>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Honey Money Pizza Cafe<br>
+  Fresh • Hot • Fast
+</footer>
+
+<script>
+let cart=[];
+let total=0;
+
+function addItem(name,price){
+
+  cart.push({
+   
