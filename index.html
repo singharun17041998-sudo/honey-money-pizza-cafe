@@ -4,143 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Honey Money Pizza Cafe</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  background:#111;
-  color:white;
-}
-
-header{
-  background:#181818;
-  padding:18px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.cart{
-  background:#ffb800;
-  color:#111;
-  padding:12px 18px;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-.hero{
-  padding:70px 25px;
-  background:linear-gradient(135deg,#3b2600,#111);
-}
-
-.hero h1{
-  font-size:42px;
-  margin-bottom:18px;
-}
-
-.hero p{
-  font-size:20px;
-}
-
-.container{
-  padding:30px 20px;
-}
-
-h2{
-  font-size:30px;
-  margin-bottom:20px;
-}
-
-.menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:18px;
-}
-
-.item{
-  background:#1d1d1d;
-  border-radius:15px;
-  padding:20px;
-  border:1px solid #333;
-}
-
-.item h3{
-  font-size:21px;
-  margin-bottom:8px;
-}
-
-.item p{
-  color:#bbb;
-  margin-bottom:15px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-button{
-  border:0;
-  background:#ffb800;
-  color:#111;
-  padding:12px 18px;
-  border-radius:9px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#ffc933;
-}
-
-#cartBox{
-  margin-top:30px;
-  background:#1d1d1d;
-  padding:20px;
-  border-radius:15px;
-  display:none;
-}
-
-.cartItem{
-  display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid #333;
-}
-
-.whatsapp{
-  display:block;
-  width:100%;
-  text-align:center;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:10px;
-  margin-top:20px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  color:#aaa;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}
+header{position:sticky;top:0;z-index:10;background:#171717;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font-size:25px;font-weight:800}
+.cart-btn,.add-btn,.order-btn{border:0;border-radius:14px;background:#ffb800;color:#111;font-weight:800;cursor:pointer}
+.cart-btn{padding:13px 18px;font-size:17px}
+.hero{padding:70px 28px;background:linear-gradient(120deg,#3b2500,#111);min-height:360px}
+.hero h1{font-size:48px;max-width:650px;margin:0 0 20px}
+.hero p{font-size:22px}
+section{padding:35px 20px;max-width:900px;margin:auto}
+h2{font-size:34px}
+.item{background:#202020;border:1px solid #3b3b3b;border-radius:20px;padding:22px;margin:16px 0}
+.item h3{font-size:25px;margin:0 0 10px}
+.item p{color:#ccc;font-size:17px}
+.price{font-size:24px;font-weight:800;margin:15px 0}
+.add-btn{padding:13px 20px;font-size:16px}
+#cartBox{display:none;background:#1d1d1d;border:1px solid #444;border-radius:20px;padding:22px;margin-top:30px}
+.cart-row{padding:12px 0;border-bottom:1px solid #444;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.remove-btn{background:#444;color:#fff;border:0;border-radius:8px;padding:7px 10px}
+.total{font-size:23px;font-weight:800;margin:20px 0}
+.form input,.form textarea,.form select{width:100%;padding:14px;margin:7px 0;background:#111;color:#fff;border:1px solid #555;border-radius:10px;font-size:16px}
+.order-btn{padding:15px 20px;font-size:17px;width:100%;margin-top:10px}
+.small{color:#aaa;font-size:14px}
+footer{text-align:center;padding:30px;color:#aaa}
 </style>
 </head>
 
@@ -148,157 +36,192 @@ footer{
 
 <header>
   <div class="logo">🍕 Honey Money Pizza Cafe</div>
-  <div class="cart">🛒 Cart <span id="count">0</span></div>
+  <button class="cart-btn" type="button" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
 </header>
 
-<section class="hero">
+<div class="hero">
   <h1>Order your favourite pizza 🍕</h1>
   <p>Fresh • Hot • Fast</p>
-</section>
+</div>
 
-<section class="container">
-  <h2>Our Menu</h2>
+<section>
+<h2>Our Menu</h2>
 
-  <div class="menu">
+<div class="item">
+<h3>🍕 Margherita Pizza</h3>
+<p>Classic cheese pizza</p>
+<div class="price">₹99</div>
+<button class="add-btn" type="button" onclick="addItem('Margherita Pizza',99)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍕 Margherita Pizza</h3>
-      <p>Classic cheese pizza</p>
-      <div class="price">₹99</div>
-      <button onclick="addItem('Margherita Pizza',99)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍕 Capsicum Pizza</h3>
+<p>Fresh capsicum & cheese</p>
+<div class="price">₹119</div>
+<button class="add-btn" type="button" onclick="addItem('Capsicum Pizza',119)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍕 Capsicum Pizza</h3>
-      <p>Cheese & fresh capsicum</p>
-      <div class="price">₹129</div>
-      <button onclick="addItem('Capsicum Pizza',129)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍕 Tomato Pizza</h3>
+<p>Fresh tomato & cheese</p>
+<div class="price">₹119</div>
+<button class="add-btn" type="button" onclick="addItem('Tomato Pizza',119)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍕 Corn Pizza</h3>
-      <p>Sweet corn & cheese</p>
-      <div class="price">₹129</div>
-      <button onclick="addItem('Corn Pizza',129)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍕 Corn Pizza</h3>
+<p>Sweet corn & cheese</p>
+<div class="price">₹129</div>
+<button class="add-btn" type="button" onclick="addItem('Corn Pizza',129)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍕 Chicken Pizza</h3>
-      <p>Loaded chicken & cheese</p>
-      <div class="price">₹179</div>
-      <button onclick="addItem('Chicken Pizza',179)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍕 Chicken Pizza</h3>
+<p>Loaded chicken & cheese</p>
+<div class="price">₹179</div>
+<button class="add-btn" type="button" onclick="addItem('Chicken Pizza',179)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍔 Chicken Burger</h3>
-      <p>Crispy chicken burger</p>
-      <div class="price">₹99</div>
-      <button onclick="addItem('Chicken Burger',99)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍔 Chicken Burger</h3>
+<p>Crispy chicken burger</p>
+<div class="price">₹99</div>
+<button class="add-btn" type="button" onclick="addItem('Chicken Burger',99)">Add to Cart</button>
+</div>
 
-    <div class="item">
-      <h3>🍔 Veg Burger</h3>
-      <p>Cheesy veg burger</p>
-      <div class="price">₹79</div>
-      <button onclick="addItem('Veg Burger',79)">Add to Cart</button>
-    </div>
+<div class="item">
+<h3>🍔 Veg Burger</h3>
+<p>Cheesy veg burger</p>
+<div class="price">₹79</div>
+<button class="add-btn" type="button" onclick="addItem('Veg Burger',79)">Add to Cart</button>
+</div>
 
-  </div>
+<div id="cartBox">
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+<div class="total">Total: ₹<span id="cartTotal">0</span></div>
 
-  <div id="cartBox">
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <h3 style="margin-top:20px;">Total: ₹<span id="total">0</span></h3>
+<div class="form">
+<h3>Delivery Details</h3>
+<input id="customerName" type="text" placeholder="Your Name">
+<input id="customerPhone" type="tel" placeholder="Mobile Number">
+<textarea id="customerAddress" rows="3" placeholder="Delivery Address"></textarea>
+<select id="payment">
+<option value="Cash on Delivery">Cash on Delivery</option>
+<option value="UPI">UPI</option>
+</select>
+</div>
 
-    <a id="whatsappBtn" class="whatsapp" href="#" target="_blank">
-      📲 Order on WhatsApp
-    </a>
-  </div>
+<button class="order-btn" type="button" onclick="sendWhatsApp()">📲 Order on WhatsApp</button>
+<p class="small">Your order details will open in WhatsApp.</p>
+</div>
 
 </section>
 
 <footer>
-  © 2026 Honey Money Pizza Cafe<br>
-  Fresh • Hot • Fast
+© 2026 Honey Money Pizza Cafe<br>
+Fresh • Hot • Fast
 </footer>
+
 <script>
 let cart = [];
 
 function addItem(name, price) {
-    cart.push({
-        name: name,
-        price: price
-    });
-
-    updateCart();
-}
-
-function updateCart() {
-    const cartItems = document.getElementById("cartItems");
-    const cartBox = document.getElementById("cartBox");
-
-    if (!cartItems) return;
-
-    cartItems.innerHTML = "";
-
-    let total = 0;
-
-    cart.forEach((item, index) => {
-        total += item.price;
-
-        const div = document.createElement("div");
-
-        div.style.padding = "10px 0";
-        div.style.borderBottom = "1px solid #444";
-
-        div.innerHTML = `
-            <strong>${item.name}</strong>
-            - ₹${item.price}
-            <button onclick="removeItem(${index})"
-            style="margin-left:10px;padding:5px 10px;">
-            Remove
-            </button>
-        `;
-
-        cartItems.appendChild(div);
-    });
-
-    const totalBox = document.querySelector("#cartBox h3");
-
-    if (totalBox) {
-        totalBox.innerHTML = "Total: ₹" + total;
-    }
-
-    const cartButton = document.querySelector("header button");
-
-    if (cartButton) {
-        cartButton.innerHTML = "🛒 Cart<br>" + cart.length;
-    }
-
-    if (cartBox) {
-        cartBox.style.display = cart.length > 0 ? "block" : "none";
-    }
-
-    const whatsappBtn = document.getElementById("whatsappBtn");
-
-    if (whatsappBtn) {
-        let message = "🍕 Honey Money Pizza Cafe Order%0A%0A";
-
-        cart.forEach(item => {
-            message += "• " + item.name + " - ₹" + item.price + "%0A";
-        });
-
-        message += "%0A💰 Total: ₹" + total;
-
-        whatsappBtn.href =
-            "https://wa.me/917668358422?text=" + message;
-    }
+  cart.push({name: name, price: Number(price)});
+  updateCart();
+  document.getElementById("cartBox").scrollIntoView({behavior:"smooth"});
 }
 
 function removeItem(index) {
-    cart.splice(index, 1);
-    updateCart();
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function updateCart() {
+  const items = document.getElementById("cartItems");
+  const count = document.getElementById("cartCount");
+  const totalEl = document.getElementById("cartTotal");
+  const box = document.getElementById("cartBox");
+
+  count.textContent = cart.length;
+
+  if (cart.length === 0) {
+    items.innerHTML = "<p>Your cart is empty.</p>";
+    totalEl.textContent = "0";
+    box.style.display = "none";
+    return;
+  }
+
+  box.style.display = "block";
+
+  let total = 0;
+  items.innerHTML = "";
+
+  cart.forEach((item,index) => {
+    total += item.price;
+
+    const row = document.createElement("div");
+    row.className = "cart-row";
+
+    const left = document.createElement("span");
+    left.textContent = item.name + " — ₹" + item.price;
+
+    const remove = document.createElement("button");
+    remove.className = "remove-btn";
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.onclick = function(){ removeItem(index); };
+
+    row.appendChild(left);
+    row.appendChild(remove);
+    items.appendChild(row);
+  });
+
+  totalEl.textContent = total;
+}
+
+function openCart() {
+  const box = document.getElementById("cartBox");
+  box.style.display = "block";
+  box.scrollIntoView({behavior:"smooth"});
+}
+
+function sendWhatsApp() {
+  if (cart.length === 0) {
+    alert("Please add an item to the cart first.");
+    return;
+  }
+
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+  const payment = document.getElementById("payment").value;
+
+  if (!name || !phone || !address) {
+    alert("Please enter your name, mobile number and delivery address.");
+    return;
+  }
+
+  let total = 0;
+  let message = "🍕 *Honey Money Pizza Cafe Order*%0A%0A";
+
+  cart.forEach((item,index) => {
+    total += item.price;
+    message += (index+1) + ". " + item.name + " - ₹" + item.price + "%0A";
+  });
+
+  message += "%0A💰 *Total: ₹" + total + "*";
+  message += "%0A👤 Name: " + encodeURIComponent(name);
+  message += "%0A📱 Mobile: " + encodeURIComponent(phone);
+  message += "%0A📍 Address: " + encodeURIComponent(address);
+  message += "%0A💳 Payment: " + encodeURIComponent(payment);
+
+  const whatsappNumber = "917668358422";
+  window.open("https://wa.me/" + whatsappNumber + "?text=" + message, "_blank");
 }
 
 updateCart();
 </script>
+
+</body>
+</html>
