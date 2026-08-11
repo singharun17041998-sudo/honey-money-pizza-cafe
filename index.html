@@ -129,7 +129,7 @@ let cart = [];
 function addItem(name, price) {
   cart.push({name: name, price: Number(price)});
   updateCart();
-  document.getElementById("cartBox").scrollIntoView({behavior:"smooth"});
+  
 }
 
 function removeItem(index) {
