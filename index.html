@@ -221,12 +221,84 @@ footer{
   © 2026 Honey Money Pizza Cafe<br>
   Fresh • Hot • Fast
 </footer>
-
 <script>
-let cart=[];
-let total=0;
+let cart = [];
 
-function addItem(name,price){
+function addItem(name, price) {
+    cart.push({
+        name: name,
+        price: price
+    });
 
-  cart.push({
-   
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    const cartBox = document.getElementById("cartBox");
+
+    if (!cartItems) return;
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+
+        const div = document.createElement("div");
+
+        div.style.padding = "10px 0";
+        div.style.borderBottom = "1px solid #444";
+
+        div.innerHTML = `
+            <strong>${item.name}</strong>
+            - ₹${item.price}
+            <button onclick="removeItem(${index})"
+            style="margin-left:10px;padding:5px 10px;">
+            Remove
+            </button>
+        `;
+
+        cartItems.appendChild(div);
+    });
+
+    const totalBox = document.querySelector("#cartBox h3");
+
+    if (totalBox) {
+        totalBox.innerHTML = "Total: ₹" + total;
+    }
+
+    const cartButton = document.querySelector("header button");
+
+    if (cartButton) {
+        cartButton.innerHTML = "🛒 Cart<br>" + cart.length;
+    }
+
+    if (cartBox) {
+        cartBox.style.display = cart.length > 0 ? "block" : "none";
+    }
+
+    const whatsappBtn = document.getElementById("whatsappBtn");
+
+    if (whatsappBtn) {
+        let message = "🍕 Honey Money Pizza Cafe Order%0A%0A";
+
+        cart.forEach(item => {
+            message += "• " + item.name + " - ₹" + item.price + "%0A";
+        });
+
+        message += "%0A💰 Total: ₹" + total;
+
+        whatsappBtn.href =
+            "https://wa.me/917668358422?text=" + message;
+    }
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+updateCart();
+</script>
